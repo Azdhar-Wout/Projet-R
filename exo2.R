@@ -10,4 +10,21 @@ A <- rbind(c(-6, -3, 6, 1),
 
 
 
+##################################################
 # PARTIE 1
+produits_scalaires <- crossprod(A)
+mask <- upper.tri(produit_scalaire)
+ortho <- all(produit_scalaire[mask] == 0)
+
+if (ortho) {
+  print("Toutes les colonnes sont orthogonales.")
+} else {
+  print("Toutes les colonnes ne sont pas orthogonales.")
+}
+##################################################
+
+
+
+##################################################
+# PARTIE 2
+produits_scalaires
