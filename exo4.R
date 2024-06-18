@@ -1,7 +1,31 @@
 ##################################################
 # PARTIE 1
-is_palindrome <- function(str) {
-  cleaned_str <- tolower(gsub("[[:space:][:punct:]]", "", str))
+clean_accentuation <- function(str) {
+  new_str <- str
+  new_str <- gsub("à", "a", new_str)
+  new_str <- gsub("â", "a", new_str)
+  new_str <- gsub("ä", "a", new_str)
+  
+  new_str <- gsub("é", "e", new_str)
+  new_str <- gsub("è", "e", new_str)
+  new_str <- gsub("ê", "e", new_str)
+  new_str <- gsub("ë", "e", new_str)
+  
+  new_str <- gsub("ï", "i", new_str)
+  new_str <- gsub("î", "i", new_str)
+  new_str <- gsub("ì", "i", new_str)
+  
+  new_str <- gsub("ò", "o", new_str)
+  new_str <- gsub("ô", "o", new_str)
+  new_str <- gsub("ö", "o", new_str)
+  
+  return(new_str)
+}
+
+
+is_palindrome <- function(str, print=TRUE) {
+  lower_str <- tolower(gsub("[[:space:][:punct:]]", "", str))
+  cleaned_str <- clean_accentuation(lower_str)
   str_split <- strsplit(cleaned_str, "")[[1]]
   taille <- length(str_split)
   milieu <- taille / 2
@@ -15,10 +39,15 @@ is_palindrome <- function(str) {
   }
   
   if(palindrome) {
-    print(paste(str, "est un palindrome"))
+    if(print){
+      print(paste0("'", str, "' est un palindrome"))
+    }
     return(TRUE)
+    
   } else {
-    print(paste(str, "n'est pas un palindrome"))
+    if(print){
+      print(paste0("'", str, "' n'est pas un palindrome"))
+    }
     return(FALSE)
   }
 }
@@ -28,14 +57,17 @@ is_palindrome <- function(str) {
 
 ##################################################
 # PARTIE 2
-is_palindrome("radar")
-is_palindrome("bonne annee")
-is_palindrome("sept")
-is_palindrome("kayak")
-is_palindrome("la mariee ira mal")
-is_palindrome("statistiques")
-is_palindrome("engage le jeu que je le gagne")
-is_palindrome("esope reste ici et se repose")
+word_list <- list("radar", 
+                  "bonne année", 
+                  "sept", 
+                  "kayak", 
+                  "la mariée ira mal", 
+                  "statistiques", 
+                  "engage le jeu que je le gagne", 
+                  "esope reste ici et se repose")
+for(word in word_list){
+  is_palindrome(word)
+}
 ##################################################
 
 
@@ -52,7 +84,7 @@ generate_random_word <- function(length) {
 generate_dictionaire <- function() {
   dictionaire <- list()
   id <- 0
-  for(length in 1:8) {
+  for(length in 2:8) {
     for(nb_mot in 1:1000){
       word <- generate_random_word(length)
       id <- id + 1
@@ -72,7 +104,7 @@ filter_palindromes <- function(dico) {
   list_palindromes <- list()
   
   for(word in dico) {
-    if(is_palindrome(word) == TRUE){
+    if(is_palindrome(word, print=FALSE) == TRUE){
       id <- length(list_palindromes) + 1
       list_palindromes[[id]] <- word
     }
