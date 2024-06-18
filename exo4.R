@@ -15,10 +15,10 @@ is_palindrome <- function(str) {
   }
   
   if(palindrome) {
-    print("mot est un palindrome")
+    print(paste(str, "est un palindrome"))
     return(TRUE)
   } else {
-    print("mot n'est pas un palindrome")
+    print(paste(str, "n'est pas un palindrome"))
     return(FALSE)
   }
 }
@@ -29,10 +29,10 @@ is_palindrome <- function(str) {
 ##################################################
 # PARTIE 2
 is_palindrome("radar")
-is_palindrome("bonne année")
+is_palindrome("bonne annee")
 is_palindrome("sept")
 is_palindrome("kayak")
-is_palindrome("la mariée ira mal")
+is_palindrome("la mariee ira mal")
 is_palindrome("statistiques")
 is_palindrome("engage le jeu que je le gagne")
 is_palindrome("esope reste ici et se repose")
