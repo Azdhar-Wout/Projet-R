@@ -8,20 +8,44 @@ valeurs_propres_multiplic <- function(matrix) {
   
   print("Valeurs propres et multiplicités de la matrice : ")
   print(table(round_val))
+  
+  return(val)
 }
 
 
 
 ##################################################
 # PARTIE 1
+is_diagonalisable <- function(matrix) {
+  nb_col <- ncol(matrix)
+  nb_row <- nrow(matrix)
+  
+  if(nb_row != nb_col) {
+    print("Cette matrice n'est pas diagonalisable.")
+    return(FALSE)
+  }
+  
+  val <- valeurs_propres_multiplic(A)
+  val_propres_A <- round(val$values, 2)
+  
+  if(length(val_propres_A) != nb_col) {
+    print("Cette matrice n'est pas diagonalisable.")
+    return(FALSE)
+  }
+  
+  print("Cette matrice est diagonalisable.")
+  return(val)
+}
+
 # Création de la matrice
 A <- rbind(c(   0,  1/2,  1/2), 
            c(-2/3,    1,  2/3),
            c(-1/3,  1/2,  5/6))
-print(A)
-valeurs_propres_multiplic(A)
-val <- eigen(A)
-val_propres_A <- round(val$values, 2)
+
+val <- is_diagonalisable(A)
+
+
+
 
 # Somme des multiplicités des valeurs propres est égale à la 
 # dimention de la matrice
