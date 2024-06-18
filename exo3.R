@@ -26,6 +26,7 @@ generate_plot <- function(a,
 
 create_delta <- function() {
   nb_points <- floor(as.numeric(readline(prompt="Enter a number of points: ")))
+  # TODO : check that a <= b and c <= d, and rephrase
   a <- as.numeric(readline(prompt="Enter value 'a': "))
   b <- as.numeric(readline(prompt="Enter value 'b': "))
   c <- as.numeric(readline(prompt="Enter value 'c': "))

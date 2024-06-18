@@ -13,8 +13,8 @@ A <- rbind(c(-6, -3, 6, 1),
 ##################################################
 # PARTIE 1
 produits_scalaires <- crossprod(A)
-mask <- upper.tri(produit_scalaire)
-ortho <- all(produit_scalaire[mask] == 0)
+mask <- upper.tri(produits_scalaires)
+ortho <- all(produits_scalaires[mask] == 0)
 
 if (ortho) {
   print("Toutes les colonnes sont orthogonales.")
@@ -27,7 +27,7 @@ if (ortho) {
 
 ##################################################
 # PARTIE 2
-produits_scalaires <- function(A) {
+normalize_over_column <- function(A) {
   U <- apply(
     A, # base matrix
     2, # 1 for row, 2 for col
@@ -37,7 +37,7 @@ produits_scalaires <- function(A) {
 }
 
 # Construire la matrice U
-U <- produits_scalaires(A)
+U <- normalize_over_column(A)
 print(U)
 ##################################################
 
@@ -62,10 +62,21 @@ y <- c(
 
 p <- round(U %*% U_t %*% y, 2)
 z = y - p
+print(p)
+print(z)
 
-#! TODO : pourquoi p appartient ) Col(A) ?
+# Les colonnes de U sont orthogonales (puisque celles de A le sont) et normées, donc elles forment une base orthonormale
+# de l'espace vectoriel engendré par Col(U) (ou Col(A), vu que c'est le même espace, puisque U est une normalisation de A).
+# On le retrouve avec : U^t·U = I_n , n = ncol(U)
+# Appliquer U·U^t revient à faire une projection orthogonale dans l'espace engendré par Col(U).
+# Ainsi, p = U·U^t·y est le projeté orthogonal de y dans l'espace vectoriel engendré par Col(U), et appartient forcément à cet espace.
 
-result_produit_scal <- round(sum(z * p), 2)
+# z·p = (y-p)·p
+#     = y·p - p·p
+#     = p·p - p·p    # par définition, puisque p est le projeté de y
+#     = 0
+
+result_produit_scal <- round(sum(z %*% t(p)), 2)
 if (result_produit_scal != 0) {
   print("z est orthogonal à p")
 } else {
@@ -77,7 +88,7 @@ if (result_produit_scal != 0) {
 
 ##################################################
 # PARTIE 5
-scallaire_per_column <- function(z, U) {
+scalaire_per_column <- function(z, U) {
   new_list <- list()
   
   for (i in 1:ncol(U)) {
@@ -87,7 +98,7 @@ scallaire_per_column <- function(z, U) {
   return(new_list)
 }
 
-z_ortho <- scallaire_per_column(z, U)
+z_ortho <- scalaire_per_column(z, U)
 
 for (i in 1:length(z_ortho)) {
   if(z_ortho[[i]] == 0) {
@@ -102,7 +113,10 @@ for (i in 1:length(z_ortho)) {
 
 ##################################################
 # PARTIE 6
-#! TODO: Expliquez pourquoi z appartient à (Col(A)?)
+# On sait que z = y - p
+# Puisque p est le projeté orthogonal de y dans l'espace vectoriel engendré par Col(U), on peut noter :
+# y = p + w , avec w ∈ Col(A)^⊥
+# On a donc w = z ∈ Col(A)^⊥ 
 
 
 
@@ -112,6 +126,7 @@ for (i in 1:length(z_ortho)) {
 
 ##################################################
 # PARTIE 7
+# Ce point est le projeté orthogonal de y sur Col(U)
 new_y = rep(1, 8)
 projection_y_on_u <- U %*% U_t %*% new_y
 ##################################################
@@ -120,6 +135,7 @@ projection_y_on_u <- U %*% U_t %*% new_y
 
 ##################################################
 # PARTIE 8
+# Il s'agit de la distance entre le point et son son projeté orthogonal sur le plan.
 b = c(1,1,1,1,-1,-1,-1,-1)
 projection_b_on_u <- U %*% U_t %*% b
 z <- b - projection_b_on_u
