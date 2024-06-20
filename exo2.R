@@ -100,13 +100,21 @@ scalaire_per_column <- function(z, U) {
 
 z_ortho <- scalaire_per_column(z, U)
 
+is_ortho <- TRUE
 for (i in 1:length(z_ortho)) {
   if(z_ortho[[i]] == 0) {
     print(paste("z est orthogonal à la colonne ", i))
   } else {
     print(paste("z n'est pas orthogonal à la colonne ", i))
+    is_ortho <- FALSE
   }
 }
+if(is_ortho){
+  print("z est orthogonal à l'ensemble des colonnes de U.")
+} else {
+  print("z n'est pas orthogonal à l'ensemble des colonnes de U.")
+}
+
 ##################################################
 
 
@@ -129,15 +137,16 @@ for (i in 1:length(z_ortho)) {
 # Ce point est le projeté orthogonal de y sur Col(U)
 new_y = rep(1, 8)
 projection_y_on_u <- U %*% U_t %*% new_y
+print(projection_y_on_u)
 ##################################################
 
 
 
 ##################################################
 # PARTIE 8
-# Il s'agit de la distance entre le point et son son projeté orthogonal sur le plan.
+# Il s'agit de la distance entre le point et son projeté orthogonal sur le plan.
 b = c(1,1,1,1,-1,-1,-1,-1)
 projection_b_on_u <- U %*% U_t %*% b
 z <- b - projection_b_on_u
 distance_b_u <- round(sqrt(sum(z^2)),2)
-
+print(distance_b_u)
