@@ -83,16 +83,20 @@ valeurs_propres_multiplic(result)
 
 ##################################################
 # PARTIE 3
-vect_propres_A <- eigen(A)
-round(vect_propres_A$vectors, 2)
+v_propres_A <- eigen(A)
+round(v_propres_A$vectors, 2)
 ##################################################
 
 
 
 ##################################################
 # PARTIE 4
-P <- round(vect_propres_A$vectors, 2)
-D <- diag(val_propres_A )
+P <- round(v_propres_A$vectors, 2)
+D <- diag(
+  round(
+    v_propres_A$values, 
+    2)
+  )
 P_inv <- round(solve(P), 2)
 
 B <- round(P %*% D %*% P_inv,2)
