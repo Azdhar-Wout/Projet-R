@@ -19,6 +19,10 @@ clean_accentuation <- function(str) {
   new_str <- gsub("ô", "o", new_str)
   new_str <- gsub("ö", "o", new_str)
   
+  new_str <- gsub("ù", "u", new_str)
+  new_str <- gsub("û", "u", new_str)
+  new_str <- gsub("ü", "u", new_str)
+  
   return(new_str)
 }
 
@@ -84,7 +88,7 @@ generate_random_word <- function(length) {
 generate_dictionaire <- function() {
   dictionaire <- list()
   id <- 0
-  for(length in 2:8) {
+  for(length in 2:9) {
     for(nb_mot in 1:1000){
       word <- generate_random_word(length)
       id <- id + 1
