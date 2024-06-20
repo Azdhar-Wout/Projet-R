@@ -26,11 +26,15 @@ generate_plot <- function(a,
 
 create_delta <- function() {
   nb_points <- floor(as.numeric(readline(prompt="Enter a number of points: ")))
-  # TODO : check that a <= b and c <= d, and rephrase
-  a <- as.numeric(readline(prompt="Enter value 'a': "))
-  b <- as.numeric(readline(prompt="Enter value 'b': "))
-  c <- as.numeric(readline(prompt="Enter value 'c': "))
-  d <- as.numeric(readline(prompt="Enter value 'd': "))
+  a_input <- as.numeric(readline(prompt="Enter value 'a': "))
+  b_input <- as.numeric(readline(prompt="Enter value 'b': "))
+  c_input <- as.numeric(readline(prompt="Enter value 'c': "))
+  d_input <- as.numeric(readline(prompt="Enter value 'd': "))
+  
+  a <- min(a_input, b_input)
+  b <- max(a_input, b_input)
+  c <- min(c_input, d_input)
+  d <- max(c_input, d_input)
   
   list_of_xiyi <- generate_plot(a, b, c, d, nb_points)
   return(list_of_xiyi)
@@ -91,7 +95,7 @@ do_p2 <- function(degre,
 
 do_p2(9)
 do_p2(19)    # Impossible si les valeurs b et d sont trop grandes
-# do_p2(29)    # Ne marche pas car trop de points trop proches ou les polynomes trop grands
+do_p2(29)    # Ne marche pas souvent car trop de points trop proches ou les polynomes trop grands
 ##################################################
 
 
